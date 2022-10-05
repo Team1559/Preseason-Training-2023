@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -82,18 +83,18 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        double speedPercent = this.controller.getLeftStickYSquared();
-        if (this.controller.getRightBumper()) {
-            speedPercent *= SLOW_MODE_MOTOR_SPEED_RATIO;
-        }
-        if (Math.abs(speedPercent) > MAX_MOTOR_SPEED) {
-            speedPercent = Math.copySign(MAX_MOTOR_SPEED, speedPercent);
-        }
-        this.motor1.set(TalonFXControlMode.PercentOutput, speedPercent);
-
-        SmartDashboard.putNumber("Percent output", speedPercent * 100);
-        SmartDashboard.putNumber("Motor RPM",
-                this.motor1.getSelectedSensorVelocity() / 2048 * 10 * 60);
+        //motor1.set(ControlMode.PercentOutput, .5);
+        double yVal = controller.getLeftStickY();
+        
+            
+            //motor1.set(TalonFXControlMode.PercentOutput,controller.getLeftStickY());
+            if(controller.getLeftBumperPressed()){
+                motor1.set(TalonFXControlMode.PercentOutput,yVal*.15);
+            }
+            else{
+                motor1.set(TalonFXControlMode.PercentOutput,yVal);
+            }
+        
     }
 
     /** This function is called once when the robot is disabled. */
