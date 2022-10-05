@@ -33,10 +33,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        this.controller = new DTXboxController(0);
-        this.motor1 = new TalonFX(0);
+        controller = new DTXboxController(0);
+        motor1 = new TalonFX(1);
 
-        this.motor1.setNeutralMode(NeutralMode.Coast);
+        motor1.setNeutralMode(NeutralMode.Coast);
     }
 
     /**
@@ -82,18 +82,12 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        double speedPercent = this.controller.getLeftStickYSquared();
-        if (this.controller.getRightBumper()) {
-            speedPercent *= SLOW_MODE_MOTOR_SPEED_RATIO;
-        }
-        if (Math.abs(speedPercent) > MAX_MOTOR_SPEED) {
-            speedPercent = Math.copySign(MAX_MOTOR_SPEED, speedPercent);
-        }
-        this.motor1.set(TalonFXControlMode.PercentOutput, speedPercent);
+        //Run motor1, at the set speed (hint: start with motor.set)
+        //When you come across a controlmode, lets use PercentOutput
+        //PercentOutput ranges from values -1 to 1
+        
 
-        SmartDashboard.putNumber("Percent output", speedPercent * 100);
-        SmartDashboard.putNumber("Motor RPM",
-                this.motor1.getSelectedSensorVelocity() / 2048 * 10 * 60);
+
     }
 
     /** This function is called once when the robot is disabled. */
