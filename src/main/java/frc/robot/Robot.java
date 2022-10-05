@@ -4,12 +4,12 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -71,7 +71,8 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         // Fluctuating speed, period = 4 seconds
-        double speed = 0.5 * Math.sqrt(Math.sin(this.autoStepCounter / 100D * Math.PI));
+        double speed = 0.5
+                * Math.sqrt(Math.sin(this.autoStepCounter / 100D * Math.PI));
         this.motor1.set(TalonFXControlMode.PercentOutput, speed);
     }
 
@@ -82,18 +83,9 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        double speedPercent = this.controller.getLeftStickYSquared();
-        if (this.controller.getRightBumper()) {
-            speedPercent *= SLOW_MODE_MOTOR_SPEED_RATIO;
+        if (controller.getAButtonPressed()) {
+            motor1.set(TalonFXControlMode.PercentOutput, 0.1);
         }
-        if (Math.abs(speedPercent) > MAX_MOTOR_SPEED) {
-            speedPercent = Math.copySign(MAX_MOTOR_SPEED, speedPercent);
-        }
-        this.motor1.set(TalonFXControlMode.PercentOutput, speedPercent);
-
-        SmartDashboard.putNumber("Percent output", speedPercent * 100);
-        SmartDashboard.putNumber("Motor RPM",
-                this.motor1.getSelectedSensorVelocity() / 2048 * 10 * 60);
     }
 
     /** This function is called once when the robot is disabled. */
