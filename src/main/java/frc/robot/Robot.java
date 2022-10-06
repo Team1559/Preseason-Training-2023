@@ -83,9 +83,8 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        if (controller.getAButtonPressed()) {
-            motor1.set(TalonFXControlMode.PercentOutput, 0.01);
-        }
+        double y = controller.getLeftStickY();
+        motor1.set(TalonFXControlMode.PercentOutput, y);
     }
 
     /** This function is called once when the robot is disabled. */
