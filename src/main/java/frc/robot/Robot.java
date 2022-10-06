@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         if (controller.getAButtonPressed()) {
-            motor1.set(TalonFXControlMode.PercentOutput, 0.1);
+            motor1.set(TalonFXControlMode.PercentOutput, 0.01);
         }
     }
 
