@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         this.controller = new DTXboxController(0);
-        this.motor1 = new TalonFX(0);
+        this.motor1 = new TalonFX(1);
 
         this.motor1.setNeutralMode(NeutralMode.Coast);
     }
